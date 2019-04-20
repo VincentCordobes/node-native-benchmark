@@ -1,0 +1,19 @@
+\documentclass[tikz]{standalone}
+
+
+\usepackage{pgfplots}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.45]
+\begin{axis}[
+  xlabel={n},
+  ylabel={ops/s},
+  legend pos=north west,
+]
+\addplot[blue] table[x=n,y=js] {points.dat};
+\addplot[red] table[x=n,y=ocaml] {points.dat};
+\legend{JS, OCaml}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+

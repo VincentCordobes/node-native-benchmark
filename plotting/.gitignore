@@ -1,0 +1,6 @@
+# tikz pgfplot
+*.log
+*.svg
+*.pdf
+*.dat
+*.aux

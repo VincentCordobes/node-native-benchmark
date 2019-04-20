@@ -1,0 +1,3 @@
+(executable
+  (name      fib)
+	(libraries base unix))
