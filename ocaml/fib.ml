@@ -6,36 +6,46 @@
 (*   let hash x = x [@@inline] *)
 (* end) *)
 
-(* let fib = *)
-(*   let table  = Hashtbl.create (module Int) in *)
-(*   let rec f n = *)
-(*     match Hashtbl.find table n with  *)
-(*       | Some x -> x *)
-(*       | None ->  *)
-(*         match n with *)
-(*         | 0 -> 0 *)
-(*         | 1 -> 1 *)
-(*         | n -> *)
-(*             let r = f (n - 1) + f (n - 2) in *)
-(*             (* Table.add table n r ; *) *)
-(*             r  *)
-(*   in *)
-(*   f *)
-
 let fib =
-  (* let table  = Array.make 30 0 in *)
+  let table  = Hashtbl.create (256) in
   let rec f n =
-    (* let _ = table.(0) in *)
-    let _ = 324 mod 3 in
-    match n with
-    | 0 -> 0
-    | 1 -> 1
-    | n ->
-      let r = f (n - 1) + f (n - 2) in
-      (* Table.add table n r ; *)
-      r 
+    match Hashtbl.find_opt table n with 
+      | Some x -> x
+      | None -> 
+        match n with
+        | 0 -> 0
+        | 1 -> 1
+        | n ->
+            let r = f (n - 1) + f (n - 2) in
+            Hashtbl.add table n r ;
+            r 
   in
   f
+
+let fib =
+  let table  = Hashtbl.create 1000 in
+  let rec f n =
+    try Hashtbl.find table n 
+    with Not_found -> (
+      match n with
+      | 0 -> 0
+      | 1 -> 1
+      | n ->
+          let r = f (n - 1) + f (n - 2) in
+          Hashtbl.add table n r ;
+          r 
+    )
+  in
+  f
+
+
+let rec fib n =
+  match n with
+  | 0 -> 0
+  | 1 -> 1
+  | n -> fib (n - 1) + fib (n - 2)
+
+
 
 (* let _ =  *)
 (*   let n = int_of_string (Sys.argv.(1)) in *)
